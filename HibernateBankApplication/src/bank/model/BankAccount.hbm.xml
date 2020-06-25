@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--DOCTYPE hibernate-mapping PUBLIC služi za import tagova-->
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated Jun 13, 2020 10:45:48 PM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="bank.model.BankAccount" table="bankaccount" catalog="bank" optimistic-lock="version">
+        <id name="accountNumber" type="string">
+            <column name="account_number" not-null="true" length="25"></column>
+        </id>     
+        <property name="amount" type="java.lang.Double">
+            <column name="amount" not-null="true"/>
+        </property>
+    </class>
+ </hibernate-mapping>
