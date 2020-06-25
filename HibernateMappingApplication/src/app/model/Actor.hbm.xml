@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated Jun 13, 2020 10:45:48 PM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="app.model.Actor" table="actor" catalog="sakila" optimistic-lock="version">
+        <!-- optimistic-lock="version" - zaključavanje rekorda na nivou tabele za 
+            istovremene izmjene iz različitih klasa (postoje, dirty, all, itd.) -->
+        <id name="actorId" type="java.lang.Integer">
+            <column name="actor_id" />
+            <generator class="identity" />
+        </id>
+        <property name="firstName" type="string">
+            <column name="first_name" length="45" not-null="true" />
+        </property>
+        <property name="lastName" type="string">
+            <column name="last_name" length="45" not-null="true" />
+        </property>
+        <property name="lastUpdate" type="timestamp">
+            <column name="last_update" length="19" not-null="true" />
+        </property>
+    </class>
+</hibernate-mapping>

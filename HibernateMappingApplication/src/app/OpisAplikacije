@@ -1,0 +1,29 @@
+
+PREDAVANJE 3
+
+1. Konfiguracija Hibernate konekcije
+2. Konekcija na bazu sakila (HQL), tabela actor
+3. Mapiranje tabele actor u klasu Actor i CRUD operacije
+
+4. APLIKACIJA TEST: SWING -> Hibernate -> MySQL Bank.BankAccount -> DAO -> 
+   ActiveRecord -> JPA (nije ORM alat)
+5. APLIKACIJA TEST: SWING -> JPA (standard za ORM alate) u kombinaciji sa Hibernate
+    -> MySQL Bank.BankAccount
+6. Metode: (create) save vs persist ; (retrieve) get vs load; (update) update vs merge (može
+   raditi sa raskvačenim objektima); (delete) delete
+
+INFO
+
+1. Moderne aplikacije se pišu po osnovama objektnog/domenskog modela, 
+bez relacionih tabela (radi se mapiranje). 
+2. Najpoznatiji alati za mapiranje (ORM alati): Hibernate (open source), 
+Oracle TopLink, MyBatis (iBATIS), EclipseLink, OpenJPA, Apache Cayenne
+3. Podjela alata za mapiranje: Pure Relational (uskladištene procedure), Light Object
+Mapping (JDBC), Medium Object Mapping, Full Object Mapping (kompozicija, naslijeđivanje,
+polimorfizam) - na ITA radimo ovaj
+4. Hibernate (open source) ima dvije verzije konfiguracije, kroz xml i anotacije  
+
+KONFIGURACIJA HIBERNATE
+1. Opis konfiguracije u klasi HibernateApplication
+2. Test konekcije i upita u klasi HibernateTest
+
