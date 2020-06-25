@@ -1,0 +1,13 @@
+
+PREDAVANJA 1-2
+
+1. Snimanje podataka iz Fx, Swing, Konzola u Txt, Xml, Json, Serializable fajlove
+
+2. PersistenceStrategy, Interface DAO i fileDAO logika za upis u fajlove
+
+3. Redis baza (biblioteka dodana, baza nije (zahtijeva runtime server)) za 
+   skladištenje sesija, procesuiranje, privremenu sinhronizaciju, message
+   queue-ing systeme i sl.
+
+
+
