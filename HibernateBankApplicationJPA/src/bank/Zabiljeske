@@ -1,0 +1,20 @@
+
+1. Kada radimo sa JPA, nemamo xml (hibernate). Imamo jednu java klasu u kojoj imamo 
+   anotacije sa konfiguracijama (kolona -> polje u klasi itd.). Implementacija JPA standarda 
+   pojednostavljuje pisanje koda.
+
+2. MAPIRANJE tabela iz baze u klase: 
+   desni klik na paket u koji mapiramo (npr. model) -> Persistence -> Entity 
+   Classes from Database -> odabrati konekciju -> dodati tabele za mapiranje 
+   next -> ne mijenjati postavke (create persistence unit obavezno) -> next 
+   -> Collection Type (odabrati 'java.util.List') -> finish
+   Nakon ovih koraka kreira se persistence.xml u kojem se nalaze konfiguracijski
+   podaci za konekciju sa bazom, kao i mapirana klasa BankAccount.java.
+
+3. Za kreiranje EntityManager Factory, važno nam je ime persistence jedinice iz
+   persistence.xml (HibernateBankApplicationJPAPU).
+
+4. Korištenjem JPA izbjegavamo ovisnost o ORM alatima
+
+5. IZ Libraries brišemo Eclipse biblioteke i dodajemo Hibernate 4.3x(JPA2.1), a neophodno
+   je dodati i MySQL JDBC Driver!!!
