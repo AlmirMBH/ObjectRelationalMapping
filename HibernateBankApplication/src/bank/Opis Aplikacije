@@ -1,6 +1,6 @@
 
-1. Aplikacija za prebacivanje novca sa jednog na drugi račun. Provjerava da li račun postoji i
-   da li ima dovoljno novca na njemu.
+1. Aplikacija za prebacivanje novca sa jednog na drugi račun. Provjerava da li 
+   račun postoji i da li ima dovoljno novca na njemu.
 2. Active record pattern - može se uključiti u model klasu. Sadrži metode koje uključuju neku 
    biznis logiku (CRUD). Dobar u model klasi (npr. Person) za osnovne operacije za rad sa bazom
 3. Abstract active record pattern - podrazumijeva kreiranje posebne klase za operacije
@@ -12,3 +12,5 @@
         BankAccount bankAccount = new BankAccount();
         Session session = HibernateUtil.getSessionFactory().openSession();
         session.save(bankAccount);
+
+5. HIBERNATE-om mapirana klasa BankAccount
