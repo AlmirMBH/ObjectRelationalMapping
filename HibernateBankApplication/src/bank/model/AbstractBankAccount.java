@@ -1,5 +1,6 @@
 package bank.model;
 
+import hibernate.CloseableSession;
 import hibernate.HibernateUtil;
 import java.util.List;
 import org.hibernate.HibernateException;
@@ -14,14 +15,17 @@ public abstract class AbstractBankAccount {
     // vidljiva pa ih injektujemo pomoću metode getThis() - inverzija naslijeđivanja,
     // odnosno eksplicitna konverzija. Ukoliko imamo više klasa, nije moguće koristiti
     // apstraktnu klasu, neophodan je DAO pattern. Ovaj pattern (active record) koristi
-    // se samo za osnovne operacije
+    // se samo za OSNOVNE OPERACIJE
     // Active recor vs abstract active record
     
     public BankAccount getThis() {
         return (BankAccount) this;
     }
 
-    // CRUD OPERACIJE
+/*  =================================================================================      
+        CRUD OPERACIJE
+    =================================================================================    
+*/
     public void create() {
 
         Session session = null;
@@ -99,13 +103,35 @@ public abstract class AbstractBankAccount {
 
     public static List<BankAccount> loadAll() {
 
-        Session session = null;
+        // Hibernate 4.3. session nije autoclosable; Java 7 je uvela try with resource.
+        // Hibernate 5.0. ima session koji je autoclosable
+        // Ukoliko kreiramo closeable session klasu (pogledati paket hibernate), možemo
+        // koristiti try with resource - cath blok umjesto try-catch-finally
+        
+/*  =================================================================================      
+        TRY WITH RESOURCE (može se koristiti ukoliko imamo klasu CloseableSession)
+    =================================================================================    
+*/      
+        try(CloseableSession closeableSession = 
+                new CloseableSession(HibernateUtil.getSessionFactory().openSession())){
+            return closeableSession.getSession().createQuery("from BankAccount").list();
+        }catch(Exception exception){
+            throw new RuntimeException(exception.getMessage());
+        }
+        
+/*  =================================================================================      
+        TRY - CATCH - FINALLY (TRY WITH RESOURCE, ako nemamo CloseableSession)
+    =================================================================================    
+*/                     
+        /*Session session = null;
         try {
             session = HibernateUtil.getSessionFactory().openSession();
-
             Query query = session.createQuery("from BankAccount");
             List<BankAccount> bankAccounts = query.list();
             return bankAccounts;
+
+        // Linija koda ispod može se pisati umjesto dvije linije iznad
+        // return session.createQuery("from BankAccount").list();
 
         } catch (HibernateException exception) {
             throw new RuntimeException(exception.getMessage());
@@ -113,18 +139,25 @@ public abstract class AbstractBankAccount {
             if (session != null) {
                 session.close();
             }
-        }
+        } */
     }
 
-    // LOGIKA ZA PREBACIVANJE SREDSTAVA SA RAČUNA NA RAČUN
-    public static boolean transferMOney(BankAccount fromAccount, BankAccount toAccount, double amount) {
+/*  =================================================================================      
+            LOGIKA ZA PREBACIVANJE SREDSTAVA SA RAČUNA NA RAČUN
+    =================================================================================    
+*/    
+    public static boolean transferMOney(BankAccount fromAccount, 
+            BankAccount toAccount, double amount) {
+        
         if (fromAccount == null || toAccount == null || amount <= 0) {
-            return false;
+            return false; // Spriječavanje 'praznih' transakcija
         }
+        
         if (fromAccount.getAccountNumber().equals(toAccount.getAccountNumber())) {
             return false; // Spriječavanje prebacivanje novca samom sebi
         }
-        Session session = null;
+        
+                    Session session = null;
         try {
             session = HibernateUtil.getSessionFactory().openSession();
 
@@ -134,6 +167,7 @@ public abstract class AbstractBankAccount {
                 System.err.println("Nedovoljno sredstava na računu!");
                 return false;
             }
+            // Trenutni iznos na računima
             double stariIznosFromAccount = fromAccount.getAmount();
             double stariIznosToAccount = toAccount.getAmount();
 

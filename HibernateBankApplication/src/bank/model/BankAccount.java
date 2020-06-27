@@ -3,6 +3,7 @@ package bank.model;
 import java.io.Serializable;
 
 public class BankAccount extends AbstractBankAccount implements Serializable{
+    
     private String accountNumber;
     private double amount;
 
@@ -34,7 +35,4 @@ public class BankAccount extends AbstractBankAccount implements Serializable{
     public String toString() {
         return accountNumber + ": " + amount;
     }
-    
-    
-    
 }

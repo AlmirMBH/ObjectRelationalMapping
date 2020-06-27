@@ -1,8 +1,10 @@
 package bank.userInterface;
 
 import bank.model.BankAccount;
+import bank.userInterface.event.TransferActionListener;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.List;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -14,6 +16,10 @@ import javax.swing.SwingUtilities;
 
 public class BankFrame extends JFrame{
 
+/*  =================================================================================      
+      KREIRANJE POLJA KORISNIČKOG INTERFACE-A (LABEL, BUTTON, TEXTFIELD, COMBOBOX)
+    =================================================================================    
+*/     
     private JLabel fromLabel = new JLabel("Sa računa:");
     private JLabel toLabel = new JLabel("Na račun:");
     private JLabel amountLabel = new JLabel("Iznos:");
@@ -25,6 +31,10 @@ public class BankFrame extends JFrame{
     
     private JButton transferButton = new JButton("Execute");
 
+/*  =================================================================================      
+            KREIRANJE FRAME-A I PANELA ZA SVAKI RED KORISNIČKOG INTERFACE-A
+    =================================================================================    
+*/     
     public BankFrame() {
         super("Money Transfer System");
         setSize(500, 500);
@@ -34,42 +44,52 @@ public class BankFrame extends JFrame{
         JPanel amountPanel = new JPanel();
         JPanel toPanel = new JPanel();
         JPanel transferPanel = new JPanel();
-        
+
+/*  =================================================================================      
+            DODAVANJE 4 PANELA U GLAVNI FRAME (KORISNIČKI INTERFACE/WINDOW)
+    =================================================================================    
+*/         
         add(fromPanel);
         add(amountPanel);
         add(toPanel);
         add(transferPanel);
-        
+
+/*  =================================================================================      
+            DODAVANJE POLJA KORISNIČKOG INTERFACE-A U PANELE
+    =================================================================================    
+*/         
         fromPanel.add(fromLabel);
         List<BankAccount> bankAccounts = BankAccount.loadAll();
         bankAccounts.forEach(bankAccount -> fromComboBox.addItem(bankAccount));
+        fromPanel.add(fromComboBox);
         
         amountPanel.add(amountLabel);
         amountPanel.add(amountTextField);
-        
-        fromPanel.add(fromComboBox);
         toPanel.add(toLabel);
+        
         bankAccounts.forEach(bankAccount -> toComboBox.addItem(bankAccount));
         toPanel.add(toComboBox);
-        
-        transferButton.addActionListener((event)->executeTransfer(event));
+        transferButton.addActionListener(this::executeTransfer);        
         transferPanel.add(transferButton);
     }
     
-    private void executeTransfer(ActionEvent event){
+    private void executeTransfer(ActionEvent e){
         
         BankAccount fromAccount = (BankAccount) fromComboBox.getSelectedItem();
         BankAccount toAccount = (BankAccount) toComboBox.getSelectedItem();
         Double amount = Double.parseDouble(amountTextField.getText());
         BankAccount.transferMOney(fromAccount, toAccount, amount);
-        
     }
-    
+        
     public void showFrame(){
         pack();
         setVisible(true);
     }
-    
+
+/*  =================================================================================      
+            POZIVANJE KORISNIČKOG INTERFACE-A U NOVOM THREAD-U
+    =================================================================================    
+*/    
     public static void main(String[] args) {
         
         BankFrame bankFrame = new BankFrame();        
