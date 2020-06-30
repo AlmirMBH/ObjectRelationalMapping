@@ -1,0 +1,37 @@
+
+1. KORACI
+   a) KREIRANA baza 'books' sa dvije tabele:
+   - book: id, title, pages, publisher_id
+   - publisher: id, name, address
+   relacije one-to-many tj. many-to-one (u zavisnosti od percepcije)
+
+   b) Kreiran projekat java application (BookPublisherApp)
+
+   c) Hibernate mapiranje:
+   1. desni klik na source package -> hibernate -> Hibernate Configuration Wizard ->
+   odabrati konekciju -> finish (kreira se hibernate.cfg.xml). Uvijek provjeriti
+   konfiguraciju jer se ne generiše uvijek kompletan kod
+   2. kreirati paket model, a onda mapirati bazu, odnosno tabele u klase u javi:
+   desni klik na paket model -> Hibernate -> reverse engineering -> dodati željene baze
+   -> kreira se klasa hibernate.reveng.xml
+   U hibernate.cfg.xml još uvijek nisu dodane tabele, što se radi u narednom koraku
+   3. desni klik na paket model -> Hibernate -> Hibernate Mapping Files and POJOs from DB
+   -> kreirane su klase po imenima tabela iz baze, kao i njihove konfiguracijske klase, a
+   dodana je konfiguracija za njih i u hibernate.cfg.xml.
+   U klasi 'Publisher.java' potrebno je parametrizovati objektno polje Book (dodati <Book>):
+   private Set<Book> books = new HashSet<>(0);
+
+   d) Kreirati tabelu author: id, name
+   
+   e) Kreirati tabelu poveznicu (many-to-many) za author i book ->
+      author_book: book_id, author_id
+
+   f) Podesiti konfiguraciju: 1) izbrisati postojeću i generisati sve ponovo ili 2) manuelno
+
+   g) Kreirati sesiju: desni klik na app -> Hibernate -> HibernateUtil.java -> kreira se
+      klasa HibernateUtil.java
+
+
+2. Unutar konfiguracijskih klasa za pojedine tabele nalazi se komanda "lazy", a može biti true
+   ili false npr. lazy="true". Ako je uslov true, upit na kolonu tabele u bazi (koju se odnosi ova
+   komanda) vršit će se samo ukoliko je to definisano u klasi.

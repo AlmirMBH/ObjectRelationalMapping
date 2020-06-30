@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+    <class name="app.model.Book" table="book" catalog="books" optimistic-lock="version">
+        <id name="id" type="java.lang.Integer">
+            <column name="id" />
+            <generator class="identity" />
+        </id>
+        <many-to-one name="publisher" class="app.model.Publisher" fetch="select">
+            <column name="publisher_id" not-null="true" />
+        </many-to-one>
+        <property name="title" type="string">
+            <column name="title" length="45" not-null="true" />
+        </property>
+        <property name="pages" type="int">
+            <column name="pages" not-null="true" />
+        </property>
+        <set name="authors" table="author_book" inverse="false" lazy="true" fetch="select">
+            <key>
+                <column name="id_book" not-null="true" />
+            </key>
+            <many-to-many entity-name="app.model.Author">
+                <column name="id_author" not-null="true" />
+            </many-to-many>
+        </set>
+    </class>
+</hibernate-mapping>
